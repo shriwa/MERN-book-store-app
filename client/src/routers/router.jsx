@@ -1,7 +1,4 @@
-import {
-    createBrowserRouter,
-    RouterProvider,
-} from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import App from "../App";
 import Home from "../pages/Home/Home";
 import Shop from "../pages/Shop/Shop";
@@ -21,73 +18,78 @@ import Logout from "../components/Logout";
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <App/>,
+    element: <App />,
     children: [
-        {
-            path: "/",
-            element : <Home/>
-        },
-        {
-            path: "/shop",
-            element : <Shop/>
-        },
-        {
-            path: "/about",
-            element : <About/>
-        },
-        {
-            path: "/blog",
-            element : <Blog/>
-        },
-        {
-            path: "/book/:id",
-            element: <SingleBook />,
-            loader: async ({ params }) => {
-              try {
-                const response = await fetch(`http://localhost:5000/book/${params.id}`);
-                const data = await response.json();
-                console.log("Data fetched:", data);
-                return data;
-              } catch (error) {
-                console.error("Error fetching data:", error);
-                throw error;
-              }
-            }
+      {
+        path: "/",
+        element: <Home />,
+      },
+      {
+        path: "/shop",
+        element: <Shop />,
+      },
+      {
+        path: "/about",
+        element: <About />,
+      },
+      {
+        path: "/blog",
+        element: <Blog />,
+      },
+      {
+        path: "/book/:id",
+        element: <SingleBook />,
+        loader: async ({ params }) => {
+          try {
+            const response = await fetch(
+              `http://mern-book-store-app.onrender.com/book/${params.id}`
+            );
+            const data = await response.json();
+            console.log("Data fetched:", data);
+            return data;
+          } catch (error) {
+            console.error("Error fetching data:", error);
+            throw error;
           }
-          
-    ]
+        },
+      },
+    ],
   },
   {
     path: "/admin/dashboard",
-    element: <DashboardLayout/>,
-    children : [
+    element: <DashboardLayout />,
+    children: [
       {
         path: "/admin/dashboard",
-        element: <PrivateRoute><Dashboard/></PrivateRoute>
+        element: (
+          <PrivateRoute>
+            <Dashboard />
+          </PrivateRoute>
+        ),
       },
       {
         path: "/admin/dashboard/upload",
-        element: <UploadBook/>
+        element: <UploadBook />,
       },
       {
         path: "/admin/dashboard/manage",
-        element: <ManageBook/>
+        element: <ManageBook />,
       },
       {
         path: "/admin/dashboard/edit-book/:id",
-        element: <EditBook/>,
-        loader: ({params}) => fetch(`http://localhost:5000/book/${params.id}`)
+        element: <EditBook />,
+        loader: ({ params }) =>
+          fetch(`http://localhost:5000/book/${params.id}`),
       },
-
-    ]
+    ],
   },
   {
     path: "/sign-up",
-    element: <SignUp/>
+    element: <SignUp />,
   },
   {
     path: "/login",
-    element: <Login/>
+    element: <Login />,
   },
 ]);
 export default router;

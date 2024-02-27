@@ -4,6 +4,7 @@ import BookCards from "../../components/BookCards";
 const BestSellerBooks = () => {
   const [books, setBooks] = useState([]);
 
+  // Fetching books for BestSellerBooks
   useEffect(() => {
     fetch("https://mern-book-store-app.onrender.com/all-books")
       .then((res) => res.json())
